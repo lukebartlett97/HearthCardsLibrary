@@ -1,2 +1,8 @@
 
 HearthCardsLibrary/\.vs/
+
+HearthCardsLibrary/packages/
+
+HearthCardsLibrary/obj/
+
+HearthCardsLibrary/bin/

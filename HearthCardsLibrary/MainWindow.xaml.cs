@@ -24,5 +24,13 @@ namespace HearthCardsLibrary
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if(((Button) sender).Name == "submitButton")
+            {
+                APIcaller.getInstance().postRequest("Test");
+            }
+        }
     }
 }
