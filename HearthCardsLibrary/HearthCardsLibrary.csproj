@@ -62,11 +62,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Storage\CardData.cs" />
+    <Compile Include="Storage\JSONService.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="APIcaller.cs" />
+    <Compile Include="Network\APIcaller.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -77,6 +79,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Network\HearthCardsAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

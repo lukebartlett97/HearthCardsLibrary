@@ -7,8 +7,30 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="submitButton" Content="Button" HorizontalAlignment="Left" Margin="508,289,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="25" Margin="288,158,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="162"/>
+        <Button x:Name="SubmitButton" Content="Submit" HorizontalAlignment="Left" Margin="619,262,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <ListView HorizontalAlignment="Left" Height="100" Margin="59,146,0,0" VerticalAlignment="Top" Width="100">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid HorizontalAlignment="Left" Height="235" Margin="257,36,0,0" VerticalAlignment="Top" Width="306">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="100*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="162" Grid.Column="1" Grid.Row="2"/>
+            <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="162" Grid.Column="1" Grid.Row="1"/>
+            <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="162" Grid.Column="1"/>
+            <TextBox x:Name="textBox_Copy2" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="162" Grid.Column="1" Grid.Row="3"/>
+        </Grid>
 
     </Grid>
 </Window>

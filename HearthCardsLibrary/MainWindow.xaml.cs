@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HearthCardsLibrary.Network;
+using HearthCardsLibrary.Storage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,13 +25,15 @@ namespace HearthCardsLibrary
         public MainWindow()
         {
             InitializeComponent();
+            JSONService.getInstance().InitialiseFolder();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(((Button) sender).Name == "submitButton")
+            
+            if(((Button) sender).Name == SubmitButton.Name)
             {
-                APIcaller.getInstance().postRequest("Test");
+                textBox.Text = HearthCardsAPI.getInstance().PostCardData("");
             }
         }
     }
