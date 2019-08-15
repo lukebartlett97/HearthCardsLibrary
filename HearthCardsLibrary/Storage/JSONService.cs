@@ -14,7 +14,7 @@ namespace HearthCardsLibrary.Storage
 
         private const string JsonPath = "CardJSON";
 
-        public static JSONService getInstance()
+        public static JSONService GetInstance()
         {
             if (instance == null)
             {
@@ -25,7 +25,7 @@ namespace HearthCardsLibrary.Storage
 
         public CardData[] ReadJsonFile(string path)
         {
-            return JsonConvert.DeserializeObject<CardData[]>(File.ReadAllText(path));
+            return JsonConvert.DeserializeObject<CardData[]>(File.ReadAllText(Path.Combine(JsonPath, path)));
         }
 
         public void InitialiseFolder()
@@ -34,17 +34,23 @@ namespace HearthCardsLibrary.Storage
             {
                 Directory.CreateDirectory(JsonPath);
             }
-            File.WriteAllText(Path.Combine(JsonPath, "sample.json"), getSampleJson());
+            File.WriteAllText(Path.Combine(JsonPath, "sample.json"), GetSampleJson());
         }
 
-        private string getSampleJson()
+        private string GetSampleJson()
         {
             CardData sampleCard = new CardData()
             {
                 Text = "Gangplank",
-                Cardtext = "Yo boi"
+                CardText = "Yo boi",
+                Mana = "7",
+                Attack = "3",
+                Health = "7",
+                CardType = "minion",
+                Gem = "epic"
             };
-            return JsonConvert.SerializeObject(sampleCard);
+            CardData[] sampleJson = new CardData[1] { sampleCard };
+            return JsonConvert.SerializeObject(sampleJson);
         }
     }
 }

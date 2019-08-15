@@ -3,33 +3,60 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:enums="clr-namespace:HearthCardsLibrary.Enums"
         xmlns:local="clr-namespace:HearthCardsLibrary"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        x:Name="Window">
     <Grid>
-        <Button x:Name="SubmitButton" Content="Submit" HorizontalAlignment="Left" Margin="619,262,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <ListView HorizontalAlignment="Left" Height="100" Margin="59,146,0,0" VerticalAlignment="Top" Width="100">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Grid HorizontalAlignment="Left" Height="235" Margin="257,36,0,0" VerticalAlignment="Top" Width="306">
+        <Grid HorizontalAlignment="Left" Height="258" Margin="179,37,0,0" VerticalAlignment="Top" Width="529">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50*"/>
-                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="176*"/>
+                <ColumnDefinition Width="204*"/>
+                <ColumnDefinition Width="149*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="35*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="70*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="35*"/>
+                <RowDefinition Height="30*"/>
+                <RowDefinition Height="35*"/>
+                <RowDefinition Height="35*"/>
             </Grid.RowDefinitions>
-            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="162" Grid.Column="1" Grid.Row="2"/>
-            <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="162" Grid.Column="1" Grid.Row="1"/>
-            <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="162" Grid.Column="1"/>
-            <TextBox x:Name="textBox_Copy2" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="162" Grid.Column="1" Grid.Row="3"/>
+            <Label x:Name="lblCardName" Height="25" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0" Content="Card Name" Grid.RowSpan="2"/>
+            <TextBox x:Name="txtCardName" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" AutomationProperties.HelpText="Card Name"/>
+            <Label x:Name="lblCardText" Height="25" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Content="Card Text" Grid.RowSpan="2"/>
+            <TextBox x:Name="txtCardText" Height="54" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Grid.Row="3" AutomationProperties.HelpText="Card Text"/>
+            <Label x:Name="lblMana" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="60" Grid.Column="1" Grid.Row="4" Content="Mana" Grid.RowSpan="2"/>
+            <TextBox x:Name="txtMana" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Grid.Column="1" Grid.Row="5" AutomationProperties.HelpText="Mana"/>
+            <Label x:Name="lblAttack" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Height="25" VerticalAlignment="Top" Width="60" Grid.Column="1" Grid.Row="4" Content="Attack" Margin="72,0" Grid.RowSpan="2"/>
+            <TextBox x:Name="txtAttack" HorizontalAlignment="Center" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Grid.Column="1" Grid.Row="5" AutomationProperties.HelpText="Attack" Margin="72,0"/>
+            <Label x:Name="lblHealth" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Height="25" VerticalAlignment="Top" Width="60" Grid.Column="1" Grid.Row="4" Content="Health" Grid.RowSpan="2"/>
+            <TextBox x:Name="txtHealth" HorizontalAlignment="Right" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" Grid.Column="1" Grid.Row="5" AutomationProperties.HelpText="Health"/>
+            <Label x:Name="lblTribe" Height="25" VerticalAlignment="Top" Grid.Column="1" Grid.Row="6" Content="Tribe" Grid.RowSpan="2"/>
+            <TextBox x:Name="txtTribe" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" Grid.Row="7" AutomationProperties.HelpText="Tribe"/>
+            <GroupBox Header="Type" Grid.RowSpan="4" Margin="0,0,10,0">
+                <Grid>
+                    <RadioButton x:Name="radTypeMinion"  CommandParameter="{x:Static enums:CardType.Minion}" Content="Minion" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="85" Checked="TypeButton_Checked" />
+                    <RadioButton x:Name="radTypeSpell" CommandParameter="{x:Static enums:CardType.Spell}" Content="Spell" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,15,0,0" Height="15" Width="85" Checked="TypeButton_Checked" />
+                    <RadioButton x:Name="radTypeWeapon" CommandParameter="{x:Static enums:CardType.Weapon}" Content="Weapon" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0" Height="15" Width="85" Checked="TypeButton_Checked" />
+                    <RadioButton x:Name="radTypeHero" CommandParameter="{x:Static enums:CardType.Hero}" Content="Hero" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,45,0,0" Height="15" Width="85" Checked="TypeButton_Checked" />
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Rarity" Grid.Row="4" Grid.RowSpan="4" Margin="0,0,10,0">
+                <Grid>
+                    <RadioButton x:Name="radRarityNone" CommandParameter="{x:Static enums:CardRarity.None}" Content="None" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="5" Height="15" Width="85" Grid.RowSpan="3" Checked="RarityButton_Checked"/>
+                    <RadioButton x:Name="radRarityCommon" CommandParameter="{x:Static enums:CardRarity.Common}" Content="Common" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,15,0,0" Height="15" Width="85" Checked="RarityButton_Checked"/>
+                    <RadioButton x:Name="radRarityRare" CommandParameter="{x:Static enums:CardRarity.Rare}" Content="Rare" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,30,0,0" Height="15" Width="85" Checked="RarityButton_Checked"/>
+                    <RadioButton x:Name="radRarityEpic" CommandParameter="{x:Static enums:CardRarity.Epic}" Content="Epic" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,45,0,0" Height="15" Width="85" Checked="RarityButton_Checked"/>
+                    <RadioButton x:Name="radRarityLegendary" CommandParameter="{x:Static enums:CardRarity.Legendary}" Content="Legendary" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,60,0,0" Height="15" Width="85" Checked="RarityButton_Checked"/>
+                </Grid>
+            </GroupBox>
+            <Button x:Name="SubmitButton" Content="Save" HorizontalAlignment="Left" Margin="129,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" Grid.Column="1" Grid.Row="8" Height="18"/>
+            <Image x:Name="CardImage" Margin="10,0,0,0" Grid.Column="2" Grid.RowSpan="8" />
         </Grid>
 
     </Grid>

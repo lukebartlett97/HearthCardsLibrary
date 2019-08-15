@@ -1,8 +1,13 @@
-﻿using System;
+﻿using HearthCardsLibrary.Storage;
+using RestSharp;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace HearthCardsLibrary.Network
 {
@@ -25,10 +30,56 @@ namespace HearthCardsLibrary.Network
             return instance;
         }
 
-        public string PostCardData(string cardData)
+        public string PostCardData(CardData cardData)
         {
+            Console.WriteLine(cardData.Text);
             string extURL = "generator_ajax.php";
-            return PostRequest(extURL, cardData);
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW");
+            request.AlwaysMultipartFormData = true;
+            request.AddParameter("multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW", CreateFormData("------WebKitFormBoundary7MA4YWxkTrZu0gW", cardData), ParameterType.RequestBody);
+            return PostRequest(extURL, request);
+        }
+
+        private string CreateFormData(string boundary, CardData cardData)
+        {
+            StringBuilder ret = new StringBuilder();
+            ret.Append(BuildStringRecord(boundary, "text", cardData.Text));
+            ret.Append(BuildStringRecord(boundary, "cardtext", cardData.CardText));
+            ret.Append(BuildStringRecord(boundary, "mana", cardData.Mana));
+            ret.Append(BuildStringRecord(boundary, "attack", cardData.Attack));
+            ret.Append(BuildStringRecord(boundary, "health", cardData.Health));
+            ret.Append(BuildStringRecord(boundary, "race", cardData.Race));
+            ret.Append(BuildStringRecord(boundary, "cardclass", cardData.CardClass));
+            ret.Append(BuildStringRecord(boundary, "swirl", cardData.Swirl));
+            ret.Append(BuildStringRecord(boundary, "gem", cardData.Gem));
+            ret.Append(BuildStringRecord(boundary, "cardtype", cardData.CardType));
+            ret.Append(boundary);
+            ret.Append("--");
+            return ret.ToString();
+        }
+
+        private string BuildStringRecord(string boundary, string recordName, string stringRecordValue)
+        {
+            return boundary + "\r\nContent-Disposition: form-data; name=\"" + recordName + "\"\r\n\r\n" + stringRecordValue + "\r\n";
+        }
+
+        public ImageSource GetCardImage(string extURL, string savePath)
+        {
+            byte[] bytes = DownloadData(extURL, savePath);
+            return bytes == null ? null : ByteToImage(bytes);
+        }
+        private static ImageSource ByteToImage(byte[] imageData)
+        {
+            BitmapImage biImg = new BitmapImage();
+            MemoryStream ms = new MemoryStream(imageData);
+            biImg.BeginInit();
+            biImg.StreamSource = ms;
+            biImg.EndInit();
+
+            ImageSource imgSrc = biImg as ImageSource;
+
+            return imgSrc;
         }
 
     }

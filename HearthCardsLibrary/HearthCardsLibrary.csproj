@@ -62,7 +62,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Enums\CardRarity.cs" />
+    <Compile Include="Enums\CardClass.cs" />
+    <Compile Include="Enums\CardType.cs" />
+    <Compile Include="Network\HearthCardsPostResponse.cs" />
     <Compile Include="Storage\CardData.cs" />
+    <Compile Include="Storage\ImageService.cs" />
     <Compile Include="Storage\JSONService.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

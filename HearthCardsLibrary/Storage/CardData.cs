@@ -11,7 +11,7 @@ namespace HearthCardsLibrary.Storage
         public string Text { get; set; }
 
         [JsonProperty("cardtext")]
-        public string Cardtext { get; set; }
+        public string CardText { get; set; }
 
         [JsonProperty("swirl")]
         public string Swirl { get; set; }
@@ -26,10 +26,16 @@ namespace HearthCardsLibrary.Storage
         public string Health { get; set; }
 
         [JsonProperty("cardtype")]
-        public string Cardtype { get; set; }
+        public string CardType { get; set; }
 
         [JsonProperty("gem")]
         public string Gem { get; set; }
+
+        [JsonProperty("race")]
+        public string Race { get; set; }
+
+        [JsonProperty("cardclass")]
+        public string CardClass { get; set; }
     }
 
     public partial class CardData
