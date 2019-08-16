@@ -11,7 +11,9 @@ namespace HearthCardsLibrary.Enums
         Minion,
         Spell,
         Weapon,
-        Hero
+        Hero,
+        Power,
+        Portrait
     }
 
     public static partial class CardUtils
@@ -28,6 +30,10 @@ namespace HearthCardsLibrary.Enums
                     return "weapon";
                 case CardType.Hero:
                     return "hero";
+                case CardType.Power:
+                    return "power";
+                case CardType.Portrait:
+                    return "portrait";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(cardType));
             }

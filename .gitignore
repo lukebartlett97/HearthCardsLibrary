@@ -6,3 +6,5 @@ HearthCardsLibrary/packages/
 HearthCardsLibrary/obj/
 
 HearthCardsLibrary/bin/
+
+*.TMP

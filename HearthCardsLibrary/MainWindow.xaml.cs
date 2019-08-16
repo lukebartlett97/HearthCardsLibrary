@@ -59,7 +59,8 @@ namespace HearthCardsLibrary
                 Health = txtHealth.Text,
                 Race = txtTribe.Text,
                 CardType = cardTypeSelected,
-                Gem = cardRaritySelected
+                Gem = cardRaritySelected,
+                CardClass = txtCardClass.Text
             };
             return cardData;
         }
@@ -95,12 +96,14 @@ namespace HearthCardsLibrary
         private void EnableAllFields()
         {
             txtCardName.IsEnabled = true;
+            txtCardClass.IsEnabled = true;
             txtCardText.IsEnabled = true;
             txtMana.IsEnabled = true;
             txtAttack.IsEnabled = true;
             txtHealth.IsEnabled = true;
             txtTribe.IsEnabled = true;
             lblCardName.IsEnabled = true;
+            lblCardClass.IsEnabled = true;
             lblCardText.IsEnabled = true;
             lblMana.IsEnabled = true;
             lblAttack.IsEnabled = true;
