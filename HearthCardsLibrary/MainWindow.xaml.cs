@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
 using HearthCardsLibrary.Enums;
+using System.IO;
 
 namespace HearthCardsLibrary
 {
@@ -30,28 +31,59 @@ namespace HearthCardsLibrary
         public MainWindow()
         {
             InitializeComponent();
-            JSONService.GetInstance().InitialiseFolder();
-            ImageService.GetInstance().InitialiseFolder();
+            JSONService.Instance.InitialiseFolder();
+            ImageService.Instance.InitialiseFolder();
             radTypeMinion.IsChecked = true;
             radRarityNone.IsChecked = true;
+            cmbCardClass.ItemsSource = Enum.GetValues(typeof(CardClass)).Cast<CardClass>();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            if(((Button) sender).Name == SubmitButton.Name)
+            CardData formData = GetFormData();
+            string postResponse = HearthCardsAPI.Instance.PostCardData(formData);
+            HearthCardsPostResponse res = JsonConvert.DeserializeObject<HearthCardsPostResponse>(postResponse);
+            string savePath = ImageService.Instance.GetImagePath(res.Cardid);
+            formData.GeneratedImage = HearthCardsAPI.Instance.GetCardImage(res.Url, savePath);
+            JSONService.Instance.SaveCard(formData);
+            CardImage.Source = formData.GeneratedImage == null ? null : ByteToImageSource(formData.GeneratedImage);
+        }
+        private static ImageSource ByteToImageSource(byte[] imageData)
+        {
+            BitmapImage biImg = new BitmapImage();
+            MemoryStream ms = new MemoryStream(imageData);
+            biImg.BeginInit();
+            biImg.StreamSource = ms;
+            biImg.EndInit();
+
+            ImageSource imgSrc = biImg as ImageSource;
+
+            return imgSrc;
+        }
+        public byte[] ImageSourceToBytes(BitmapEncoder encoder, ImageSource imageSource)
+        {
+            byte[] bytes = null;
+            var bitmapSource = imageSource as BitmapSource;
+
+            if (bitmapSource != null)
             {
-                string postResponse = HearthCardsAPI.getInstance().PostCardData(GetFormData());
-                HearthCardsPostResponse res = JsonConvert.DeserializeObject<HearthCardsPostResponse>(postResponse);
-                string savePath = ImageService.GetInstance().GetImagePath(res.Cardid);
-                CardImage.Source = HearthCardsAPI.getInstance().GetCardImage(res.Url, savePath);
+                encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
+
+                using (var stream = new MemoryStream())
+                {
+                    encoder.Save(stream);
+                    bytes = stream.ToArray();
+                }
             }
+
+            return bytes;
         }
 
         private CardData GetFormData()
         {
             CardData cardData = new CardData
             {
+                UniqueName = txtUniqueName.Text,
                 Text = txtCardName.Text,
                 CardText = txtCardText.Text,
                 Mana = txtMana.Text,
@@ -60,7 +92,8 @@ namespace HearthCardsLibrary
                 Race = txtTribe.Text,
                 CardType = cardTypeSelected,
                 Gem = cardRaritySelected,
-                CardClass = txtCardClass.Text
+                CardClass = ((CardClass) cmbCardClass.SelectedValue).GetAPIString(),
+                UserImage = ImageService.Instance.GetImage(txtImageFile.Text)
             };
             return cardData;
         }
@@ -96,7 +129,7 @@ namespace HearthCardsLibrary
         private void EnableAllFields()
         {
             txtCardName.IsEnabled = true;
-            txtCardClass.IsEnabled = true;
+            cmbCardClass.IsEnabled = true;
             txtCardText.IsEnabled = true;
             txtMana.IsEnabled = true;
             txtAttack.IsEnabled = true;
@@ -114,6 +147,29 @@ namespace HearthCardsLibrary
         private void RarityButton_Checked(object sender, RoutedEventArgs e)
         {
             cardRaritySelected = ((CardRarity)((RadioButton)sender).CommandParameter).GetAPIString();
+        }
+
+        private void PickFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Configure open file dialog box
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.InitialDirectory = "CardImages";
+
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                string filename = dlg.FileName;
+                txtImageFile.Text = filename;
+            }
+        }
+
+        private void ExportButton_Click(object sender, RoutedEventArgs e)
+        {
+            ImageService.Instance.ExportImage(ImageSourceToBytes(new PngBitmapEncoder(), CardImage.Source));
         }
     }
 }

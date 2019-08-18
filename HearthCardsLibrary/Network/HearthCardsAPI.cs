@@ -21,13 +21,12 @@ namespace HearthCardsLibrary.Network
             BaseURL = HearthCardsURL;
         }
 
-        public static HearthCardsAPI getInstance()
+        public static HearthCardsAPI Instance
         {
-            if (instance == null)
+            get
             {
-                instance = new HearthCardsAPI();
+                return instance ?? (instance = new HearthCardsAPI());
             }
-            return instance;
         }
 
         public string PostCardData(CardData cardData)
@@ -54,6 +53,7 @@ namespace HearthCardsLibrary.Network
             ret.Append(BuildStringRecord(boundary, "swirl", cardData.Swirl));
             ret.Append(BuildStringRecord(boundary, "gem", cardData.Gem));
             ret.Append(BuildStringRecord(boundary, "cardtype", cardData.CardType));
+            ret.Append(BuildStringRecord(boundary, "userimage", cardData.UserImage.ToString()));
             ret.Append(boundary);
             ret.Append("--");
             return ret.ToString();
@@ -64,22 +64,9 @@ namespace HearthCardsLibrary.Network
             return boundary + "\r\nContent-Disposition: form-data; name=\"" + recordName + "\"\r\n\r\n" + stringRecordValue + "\r\n";
         }
 
-        public ImageSource GetCardImage(string extURL, string savePath)
+        public byte[] GetCardImage(string extURL, string savePath)
         {
-            byte[] bytes = DownloadData(extURL, savePath);
-            return bytes == null ? null : ByteToImage(bytes);
-        }
-        private static ImageSource ByteToImage(byte[] imageData)
-        {
-            BitmapImage biImg = new BitmapImage();
-            MemoryStream ms = new MemoryStream(imageData);
-            biImg.BeginInit();
-            biImg.StreamSource = ms;
-            biImg.EndInit();
-
-            ImageSource imgSrc = biImg as ImageSource;
-
-            return imgSrc;
+            return DownloadData(extURL, savePath);
         }
 
     }

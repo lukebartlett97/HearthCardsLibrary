@@ -10,20 +10,35 @@ namespace HearthCardsLibrary.Storage
 {
     class JSONService
     {
-        private static JSONService instance;
-
         private const string JsonPath = "CardJSON";
 
-        public static JSONService GetInstance()
+        private static JSONService instance;
+        public static JSONService Instance
         {
-            if (instance == null)
+            get
             {
-                instance = new JSONService();
+                return instance ?? (instance = new JSONService());
             }
-            return instance;
         }
 
-        public CardData[] ReadJsonFile(string path)
+        public void SaveCard(CardData cardData)
+        {
+            CardData[] cardArray = new CardData[1] { cardData };
+            string cardJson = cardArray.ToJson();
+            File.WriteAllText(GetCardPath(cardData),cardJson);
+        }
+
+        public void LoadCard(CardData cardData)
+        {
+            ReadJsonFile(GetCardPath(cardData));
+        }
+
+        private string GetCardPath(CardData cardData)
+        {
+            return Path.Combine(JsonPath, cardData.UniqueName) + ".json";
+        }
+
+        private CardData[] ReadJsonFile(string path)
         {
             return JsonConvert.DeserializeObject<CardData[]>(File.ReadAllText(Path.Combine(JsonPath, path)));
         }

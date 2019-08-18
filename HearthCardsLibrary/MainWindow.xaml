@@ -9,7 +9,7 @@
         Title="MainWindow" Height="450" Width="800"
         x:Name="Window">
     <Grid>
-        <Grid HorizontalAlignment="Left" Height="279" Margin="179,37,0,0" VerticalAlignment="Top" Width="529">
+        <Grid HorizontalAlignment="Left" Height="281" Margin="179,37,0,0" VerticalAlignment="Top" Width="529">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="176*"/>
                 <ColumnDefinition Width="204*"/>
@@ -33,7 +33,7 @@
             <Label x:Name="lblUniqueName" Grid.Column="0" Grid.Row="0" Content="Unique Name" Grid.RowSpan="2" Margin="0,0,10,0"/>
             <TextBox x:Name="txtUniqueName" TextWrapping="Wrap" Grid.Column="0" Grid.Row="1" AutomationProperties.HelpText="Unique Name" Margin="0,0,10,0"/>
             <Label x:Name="lblCardClass" Grid.Column="1" Grid.Row="2" Content="Class" Grid.RowSpan="2"/>
-            <TextBox x:Name="txtCardClass" TextWrapping="Wrap" Grid.Column="1" Grid.Row="3" AutomationProperties.HelpText="Card Name"/>
+            <ComboBox x:Name="cmbCardClass" Grid.Column="1" Grid.Row="3" />
             <Label x:Name="lblCardText" Grid.Column="1" Grid.Row="4" Content="Card Text" Grid.RowSpan="2"/>
             <TextBox x:Name="txtCardText" TextWrapping="Wrap" Grid.Column="1" Grid.Row="5" AutomationProperties.HelpText="Card Text"/>
             <Label x:Name="lblMana" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Width="60" Grid.Column="1" Grid.Row="6" Content="Mana" Grid.RowSpan="2"/>
@@ -44,7 +44,7 @@
             <TextBox x:Name="txtHealth" HorizontalAlignment="Right" TextWrapping="Wrap" Width="60" Grid.Column="1" Grid.Row="7" AutomationProperties.HelpText="Health"/>
             <Label x:Name="lblTribe" Grid.Column="1" Grid.Row="8" Content="Tribe" Grid.RowSpan="2"/>
             <TextBox x:Name="txtTribe" TextWrapping="Wrap" Grid.Column="1" Grid.Row="9" AutomationProperties.HelpText="Tribe"/>
-            <GroupBox Header="Type" Grid.Row="2" Grid.RowSpan="4" Margin="0,0,10,0">
+            <GroupBox Header="Type" Grid.Row="2" Grid.RowSpan="5" Margin="0,0,10,0">
                 <Grid>
                     <RadioButton x:Name="radTypeMinion"  CommandParameter="{x:Static enums:CardType.Minion}" Content="Minion" HorizontalAlignment="Left" VerticalAlignment="Top" Height="15" Width="85" Checked="TypeButton_Checked" />
                     <RadioButton x:Name="radTypeSpell" CommandParameter="{x:Static enums:CardType.Spell}" Content="Spell" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,15,0,0" Height="15" Width="85" Checked="TypeButton_Checked" />
@@ -54,7 +54,7 @@
                     <RadioButton x:Name="radTypePower" CommandParameter="{x:Static enums:CardType.Power}" Content="Power" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,75,0,0" Height="15" Width="85" Checked="TypeButton_Checked" />
                 </Grid>
             </GroupBox>
-            <GroupBox Header="Rarity" Grid.Row="6" Grid.RowSpan="5" Margin="0,0,10,15">
+            <GroupBox Header="Rarity" Grid.Row="7" Grid.RowSpan="6" Margin="0,0,10,15">
                 <Grid>
                     <RadioButton x:Name="radRarityNone" CommandParameter="{x:Static enums:CardRarity.None}" Content="None" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="7" Height="15" Width="85" Grid.RowSpan="3" Checked="RarityButton_Checked"/>
                     <RadioButton x:Name="radRarityCommon" CommandParameter="{x:Static enums:CardRarity.Common}" Content="Common" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,15,0,0" Height="15" Width="85" Checked="RarityButton_Checked"/>
@@ -63,8 +63,12 @@
                     <RadioButton x:Name="radRarityLegendary" CommandParameter="{x:Static enums:CardRarity.Legendary}" Content="Legendary" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,60,0,0" Height="15" Width="85" Checked="RarityButton_Checked"/>
                 </Grid>
             </GroupBox>
-            <Button x:Name="SubmitButton" Content="Save" HorizontalAlignment="Left" Margin="129,5,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" Grid.Column="1" Grid.Row="10" Height="18"/>
-            <Image x:Name="CardImage" Margin="10,0,0,0" Grid.Column="2" Grid.RowSpan="8" />
+            <TextBox x:Name="txtImageFile" TextWrapping="Wrap" Grid.Column="2" Grid.Row="7" AutomationProperties.HelpText="Image" Margin="10,0,0,2"/>
+            <Button x:Name="PickFileButton" Content="Choose Image" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="2" Grid.Row="8" Click="PickFileButton_Click" Margin="10,0,0,0" />
+            <Button x:Name="SubmitButton" Content="Save Changes" HorizontalAlignment="Right" VerticalAlignment="Center" Click="SubmitButton_Click" Grid.Column="1" Grid.Row="12" Margin="0,0,10,0" />
+            <Button x:Name="ExportButton" Content="Export Card" HorizontalAlignment="Right" VerticalAlignment="Center" Click="ExportButton_Click" Grid.Column="2" Grid.Row="12" Margin="0,0,0,0" />
+            <Button x:Name="DiscardButton" Content="Discard Changes" HorizontalAlignment="Left" VerticalAlignment="Center" Click="SubmitButton_Click" Grid.Column="1" Grid.Row="12" Margin="10,0,0,0" />
+            <Image x:Name="CardImage" Margin="10,0,0,0" Grid.Column="2" Grid.RowSpan="6" />
         </Grid>
 
     </Grid>

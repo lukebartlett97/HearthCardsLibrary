@@ -10,6 +10,9 @@ namespace HearthCardsLibrary.Storage
         [JsonProperty("text")]
         public string Text { get; set; }
 
+        [JsonProperty("uniquename")]
+        public string UniqueName { get; set; }
+
         [JsonProperty("cardtext")]
         public string CardText { get; set; }
 
@@ -36,6 +39,12 @@ namespace HearthCardsLibrary.Storage
 
         [JsonProperty("cardclass")]
         public string CardClass { get; set; }
+
+        [JsonProperty("userimage")]
+        public byte[] UserImage { get; set; }
+
+        [JsonProperty("generatedimage")]
+        public byte[] GeneratedImage { get; set; }
     }
 
     public partial class CardData
